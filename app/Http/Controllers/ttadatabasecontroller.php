@@ -44,16 +44,30 @@ class ttadatabasecontroller extends Controller
         // Chuyển hướng về trang danh sách
         return redirect('/khoa');
     }
-
+    # insert -get
     public function insert(){
         return view('ttakhoa.ttainsert');
     }
-
+    # insert post
     public function createSubmit(Request $request) {
-        DB::insert('INSERT INTO ttakhoa(ttaMaKhoa, ttaTenKhoa) VALUES(?, ?)', [
-            $request->ttaMaKhoa,
-            $request->ttaTenKhoa
+        //kiểm tra dữ liệu nhập 
+        $validate = $request ->validate([
+        'ttaMaKhoa' => 'required|string|max:10|unique:ttakhoa,ttaMaKhoa',
+        'ttaTenKhoa' => 'required|string|max:255',
+        ],
+        
+        [
+            'ttaMaKhoa.min' => 'Mã khoa phải có ít nhất min ký tự.',
+            'ttaMaKhoa.max' => 'Mã khoa không được vượt quá max ký tự.',
+            'ttaTenKhoa.min' => 'Tên khoa phải có ít nhất min ký tự.',
+            'ttaTenKhoa.max' => 'Tên khoa không được vượt quá max ký tự.',
         ]);
+  
+        DB::insert('INSERT INTO ttakhoa(ttaMaKhoa, ttaTenKhoa) VALUES(?, ?)', [
+            $validate['ttaMaKhoa'],
+            $validate['ttaTenKhoa']
+        ]);
+        
         return redirect('/khoa');
     }
     # xóa dữ liệu

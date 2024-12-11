@@ -10,23 +10,33 @@
 <body>
     <section class="container my-3">
         <div class="card">
+
             <div class="card-header">
-                <h3>Thêm mới thông tin khoa</h3>
+                <h3>Thêm mới thông tin khoa </h3>
             </div>
+
                 <div class="card-body">
                     <form action="{{route('Khoa.submitinsert')}}" method="POST">
                     @csrf
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="ttaMaKhoa ">Mã khoa</span>
                             
-                            <input type="text" class="form-control" aria-describedby="ttaMaKhoa" name="ttaMaKhoa" value="">
-
+                            <input type="text" class="form-control" aria-describedby="ttaMaKhoa" name="ttaMaKhoa" value="{{ old('ttaMaKhoa') }}">
+                            @error('ttaMaKhoa')
+                                <div class="text-danger">{{$message}}</div> 
+                            @enderror
                         </div>
+
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="ttaTenKhoa">Tên khoa</span>
                             
-                            <input type="text" class="form-control" aria-describedby="ttaTenKhoa" name="ttaTenKhoa" value="">
+                            <input type="text" class="form-control" aria-describedby="ttaTenKhoa" name="ttaTenKhoa" value="{{ old('ttaTenKhoa') }}">
+                       
+                            @error('ttaTenKhoa')
+                                    <div class="text-danger">{{$message}}</div> 
+                            @enderror
                         </div>
+
                     <div class="card-footer">
                         <input type="submit" class="btn btn-primary"
                         name="btnSubmit" value="Thêm mới">
